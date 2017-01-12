@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <script src='/socket.io/socket.io.js'></script>
+        <script>
+				var socket = io();
+
+				socket.on('welcome', function(data) {
+						addMessage(data.message);
+
+						// Respond with a message including this clients' id 
+						// sent from the server
+
+					socket.emit('i am client', {data: 'foo!', id: data.id});
+				});
+
+				socket.on('time', function(data) {
+						addMessage(data.time);
+				});
+
+				socket.on('error', console.error.bind(console));
+				socket.on('message', console.log.bind(console));
+
+				// Server Reply
+				socket.on('message2', function(data){
+					console.log(data);
+				});
+
+				function addMessage(message) {
+						var text = document.createTextNode(message),
+								el = document.createElement('li'),
+								messages = document.getElementById('messages');
+
+						el.appendChild(text);
+						messages.appendChild(el);
+				}
+	
+        </script>
+    </head>
+    <body>
+        <ul id='messages'></ul>
+				<button onclick="myFunc()">Ass Bandits</button>
+    </body>
+	<script>
+				function myFunc(){
+					socket.emit('i am client', "Message from client");
+					socket.emit('msgToServer', "Message to server");
+					console.log('Message Sent to Server');
+				};			
+	</script>
+</html>

@@ -1,0 +1,21 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+	{
+		"type": "Feature",
+		"id":"Argo",
+		"properties": {
+			"id": 1,
+			"name": "BLUFOR"
+			},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [
+			36.04434,
+			4.06427
+			]
+		}
+	} 
+
+  ]
+}

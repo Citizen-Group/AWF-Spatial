@@ -1,0 +1,7 @@
+﻿SELECT 
+  unit.pk_uid AS "ID", 
+  type.name AS "Type"
+FROM 
+  public.unit, 
+  public.type
+WHERE unit.fk_type = type.pk_uid;
