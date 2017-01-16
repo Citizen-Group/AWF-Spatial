@@ -3,7 +3,7 @@
 	"features": [
 	{
 		"type": "Feature",
-		"id":"Argo",
+		"id": "Argo",
 		"properties": {
 			"id": 1,
 			"name": "BLUFOR"
