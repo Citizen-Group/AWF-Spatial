@@ -1,0 +1,19 @@
+{
+  "name": "gps",
+  "version": "0.0.1",
+  "description": "GPS module",
+  "main": "gps-module.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "net": "^1.0.2",
+    "node-nmea": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Citizen Group",
+  "license": "ISC"
+}
