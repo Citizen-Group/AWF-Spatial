@@ -1,0 +1,84 @@
+<%-- Demostration of the use of a geoserver -->
+
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="http://openlayers.org/en/v3.18.2/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="http://openlayers.org/en/v3.18.2/build/ol-debug.js" type="text/javascript"></script>
+<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+
+  <title>OpenLayers 3 example</title>
+  </head>
+  <body>
+    <h2><div id="poop">My Map</div></h2>
+    <div id="map" class="map"></div>
+    <div id="text"></div>
+
+<script type="text/javascript">
+var wfszor =  new ol.source.Vector({
+    format: new ol.format.GeoJSON(),
+    url: function(extent) {
+        return 'http://localhost:8080/geoserver/wfs?service=WFS&' +
+            'version=1.1.0&request=GetFeature&typename=postgis:planet_osm_polygon&' +
+            'outputFormat=application/json&srsname=EPSG:3857&' +
+            'bbox=' + extent.join(',') + ',EPSG:3857';
+    },
+    strategy: ol.loadingstrategy.bbox
+});
+
+var vector = new ol.layer.Vector({
+    source: wfszor,
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'rgba(0, 0, 255, 1.0)',
+            width: 2
+        })
+    })
+});
+
+var map = new ol.Map({
+  layers: [new ol.layer.Tile({
+          source: new ol.source.OSM()
+      })],
+  target: 'map',
+  view: new ol.View({
+    center: [-8425467, 5685941], // ESPG:3857
+    zoom: 16
+  })
+});
+
+map.addLayer(vector);
+
+var selectClick = new ol.interaction.Select({
+    condition: ol.events.condition.click,
+    multi: true
+});
+map.addInteraction(selectClick);
+
+selectClick.on('select', function(e) {
+    document.getElementById('text').innerHTML = '&nbsp;' +
+        e.target.getFeatures().getLength() +
+        ' selected features (last operation selected ' + e.selected.length +
+        ' and deselected ' + e.deselected.length + ' features)';
+    console.log("Coordinates: " + e.target.getFeatures().item(0).getGeometry().getCoordinates());
+    console.log("ID: " + e.target.getFeatures().item(0).get('osm_id'));
+});
+
+</script>
+  </body>
+</html>
+
+
+
+
+
+
+
